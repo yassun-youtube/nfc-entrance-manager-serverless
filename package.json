@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "sh -c 'source ./venv/bin/activate && nodemon --exec \"serverless offline\" -e py,yml'"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "serverless-offline": "^13.6.0",
+    "serverless-python-requirements": "^6.1.0"
+  }
+}

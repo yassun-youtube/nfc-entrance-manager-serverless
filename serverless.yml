@@ -1,0 +1,59 @@
+service: nfc-entrance-manager-serverless
+frameworkVersion: '3'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: ap-northeast-1
+  timeout: 30
+  iamManagedPolicies:
+    - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+  environment:
+    AUTHORIZED_KEY: ${env:AUTHORIZED_KEY}
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+functions:
+  post_records:
+    handler: api.post_records.handler
+    events:
+      - httpApi:
+          path: /records
+          method: post
+  post_users:
+    handler: api.post_users.handler
+    events:
+      - httpApi:
+          path: /users
+          method: post
+
+resources:
+  Resources:
+    UserTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: User
+        AttributeDefinitions:
+          - AttributeName: suica_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: suica_id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    EntranceRecordTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: EntranceRecord
+        AttributeDefinitions:
+          - AttributeName: suica_id
+            AttributeType: S
+          - AttributeName: created_at
+            AttributeType: S
+        KeySchema:
+          - AttributeName: suica_id
+            KeyType: HASH
+          - AttributeName: created_at
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
