@@ -28,7 +28,12 @@ functions:
       - httpApi:
           path: /users
           method: post
-
+  get_user:
+    handler: api.get_user.handler
+    events:
+      - httpApi:
+          path: /users/{suica_id}
+          method: get
 resources:
   Resources:
     UserTable:

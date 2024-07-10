@@ -10,3 +10,9 @@ def put_user(suica_id: str, name: str, email: str):
         'name': name,
         'email': email
     })
+
+def get_user(suica_id: str):
+    table = dynamodb.Table('User')
+    response = table.get_item(Key={'suica_id': suica_id})
+    print(response)
+    return response.get('Item', None)

@@ -41,3 +41,16 @@ Bearer <token>
     "id": <string>
 }
 ```
+
+## GET /users/:suicaId
+
+### Response
+```
+200
+{
+  "suicaId": <string>,
+  "name": <string>,
+  "email": <string>
+}
+```
+

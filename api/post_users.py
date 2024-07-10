@@ -4,7 +4,7 @@ from lib.authorizer import authorize
 
 
 def handler(event, context):
-    if not authorize():
+    if not authorize(event):
         return {"statusCode": 401}
 
     body = json.loads(event["body"])
